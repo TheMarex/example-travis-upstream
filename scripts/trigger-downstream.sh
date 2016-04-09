@@ -11,6 +11,9 @@ TRAVIS_MSG="
     {
         \"message\": \"Triggered build: ${UPSTREAM_NAME} : ${TRAVIS_COMMIT}\",
         \"branch\": \"${BRANCH_NAME}\"
+        \"config\": {
+            \"env\": \"TRIGGER_COMMIT=${TRAVIS_COMMIT}\"
+        }
     }
 }"
 GITHUB_MSG="
