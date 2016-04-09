@@ -15,14 +15,15 @@ env:
 matrix:
   include:
       # will trigger downstream
-    - env: BUILD_NUMBER=1 FAIL=false TRIGGER_DOWNSTREAM=true
+    - env: FAIL=false TRIGGER_DOWNSTREAM=true
       # won't trigger downstream because it fails
-    - env: BUILD_NUMBER=2 FAIL=true TRIGGER_DOWNSTREAM=true
+    - env: FAIL=true TRIGGER_DOWNSTREAM=true
       # won't trigger downstream, because we disabled it
-    - env: BUILD_NUMBER=3 FAIL=false TRIGGER_DOWNSTREAM=false
+    - env: FAIL=false TRIGGER_DOWNSTREAM=false
 
 script:
-  - echo "Building ${BUILD_NUMBER}"
+  - export UPSTREAM_REPO="${TRAVIS_REPO_SLUG}"
+  - echo "[${UPSTREAM_REPO}]Building ${TRAVIS_BUILD_NUMBER}"
   - |
     if [[ ${FAIL} ]]; then
       exit 1

@@ -5,7 +5,6 @@ Example repository for a upstream/downstream setup. This is upstream.
 
 If you want to try this setup, fork both this and the downstream repository and modify the following vars in `travis.yml`:
 
-- `UPSTREAM_REPO`: `{user}/{repo}` point to your downstream fork
 - `DOWNSTREAM_REPO`: `{user}/{repo}` point to your downstream fork
 - `secure: [... gibberish ...]` These need to be replaced by secret tokens for GitHub and Travis.
 

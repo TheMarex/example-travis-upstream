@@ -21,7 +21,7 @@ GITHUB_MSG="
     \"state\": \"pending\",
     \"target_url\": \"https://travis-ci.org/${DOWNSTREAM_REPO}/builds\",
     \"description\": \"Running downstream build\",
-    \"context\": \"continuous-integration/downstream/${DOWNSTREAM_REPO}\"
+    \"context\": \"continuous-integration/downstream/${DOWNSTREAM_REPO}/0\"
 } "
 
 trigger_downstream() {
