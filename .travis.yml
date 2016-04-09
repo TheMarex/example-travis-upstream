@@ -1,0 +1,35 @@
+language: generic
+sudo: false
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+    # GITHUB_TOKEN + TRAVIS_TOKEN
+    - secure: "vsU5GJS+Z/NT63mDgCqPYhJTxYwgbhSPBZ6l7hf9UBxuWAJVQ4dIOqnU2af1OSIyjb9nWbPdMp/+Bqgcv075Cs7VlJyHXmIymPI3/lDJ/1m3+LobRfbAmyHjSekZsggeortg5ybj0F4NDf+CGX38XEHn1uca2qTS1wX8qBuA7SP35/EZqMEqSDZdKGKWAj3xXI6XJBggIf8DQoXZUu/LkKianT4PyRQ4gZqOeTUo4N4J6OhiPEto1x9d2gaYM1SIvt8oxG/pmi09vw8WFH3vCcPOiFRFvv9WG6ZVrmT+OSUxMn65GrOOv//Zo4sR9rLzyunfRFuqiBFagQtwJ+1Xp7k1rwbaQx5o7JV0Ukbyjt82b19Snr9yI/MfElgxHuJWwflt+io3jL3qgFLRqQAcBgmXzXXV5pfNkLBcyc7SiRPteC2gI1ty58T/fD6psk8ZP8EeEbH0yv4RzzQ8ldSNxX4FSB7hi1vMhZ/W/JvrvafUtJNfcvkLHG9POuXZ+ZUX6V8zEOWhwcx0xWSZXs1xuu0B1AmDpS7Lrq7X9suz74NpgqxTMrw5prYR/+8iPILTOejv4c6N3/PhthwPl/0p5uNoOtXv/h5g2x9hfOnqLaiE6HtUq4q6t+/Qt4694uQkTnK8DiOBBZRUDRiRPnjwdZHd/DKbJ1siVNQI+64ejKM="
+    - secure: "cFdqwDQz6hdWug95SnIoGITWOk0z97YXGU8h+/9ufr8UBMHST2dcPkerQ0PtpqCX7+UWFJ8sPuKPtCqNfq4WnFP9hKDYwajChH9kPDgfVHS0NP2YfBmd8xcVG9uKABSkcV9wlnzFFaxjovW9VQ+vpjlI9jHe/FAgoOGOi6Rl7I/Bf1HQgWOf+e08w3oOkCV9zbIoPcGW8QKop2QSVDh6FA8wEqgu69OK9m6e7FUDOqMAkP3J2Cue2+nICJAew0ExM5g3m6hYbaukfF68Ihf1RilQpBp4u9vTq1NzkDer8ViQUzM7QoVKZ/3JWvLrVezY2JXYCwaWNZiTenOXnITDcpsu8eTpWalcfF8ahL/s/SOVcU3hvsEFvKiprEketNNTJivBLZS8xpyGXmN/g/DMjDLd3cug7wSmeYsPGilpzt9ZJVFGhu7inR8GdxmD9LnK9hYhOHmW7r82dC9qSau0igoLKIiQw32J6v2sw2GWWWXnpk7bImbv3OV7d1xYNu4Rdp5TN1g149Qrs8Bwq+dhc9XOzYcQxHVPQ8eqQCPUVRcp5lbjBsAwU1dJtxGkT8EtucOdSceKQBIGjeauwchIyvEsnSS3dqTHPzlwP8xLsOKECMpEIK3mpVdYbOqRgE2DE4NdC9fjOzhWnjc1Ok3U6V5badYuTIdOA6Em3584kVQ="
+
+matrix:
+  include:
+      # will trigger downstream
+    - env: BUILD_NUMBER=1 FAIL=false TRIGGER_DOWNSTREAM=true
+      # won't trigger downstream because it fails
+    - env: BUILD_NUMBER=2 FAIL=true TRIGGER_DOWNSTREAM=true
+      # won't trigger downstream, because we disabled it
+    - env: BUILD_NUMBER=3 FAIL=false TRIGGER_DOWNSTREAM=false
+
+script:
+  - echo "Building ${BUILD_NUMBER}"
+  - |
+    if [[ ${FAIL} ]]; then
+      exit 1
+    fi
+
+after_success:
+  - |
+    if [[ ${TRIGGER_DOWNSTREAM} ]]; then
+      ./scripts/trigger-downstream.sh
+    fi
+
