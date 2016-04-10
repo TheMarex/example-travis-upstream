@@ -25,7 +25,7 @@ GITHUB_MSG="
 } "
 
 trigger_downstream() {
-    echo "Triggering: ${DOWNSTREAM_REPO}"
+    echo "Triggering: ${DOWNSTREAM_BRANCH} in ${DOWNSTREAM_REPO}"
     curl -s -X POST \
       -H "Content-Type: application/json" \
       -H "Accept: application/json" \
