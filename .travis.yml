@@ -25,13 +25,13 @@ script:
   - export UPSTREAM_REPO="${TRAVIS_REPO_SLUG}"
   - echo "[${UPSTREAM_REPO}]Building ${TRAVIS_BUILD_NUMBER}"
   - |
-    if [[ ${FAIL} ]]; then
+    if ${FAIL}; then
       exit 1
     fi
 
 after_success:
   - |
-    if [[ ${TRIGGER_DOWNSTREAM} ]]; then
+    if ${TRIGGER_DOWNSTREAM}; then
       ./scripts/trigger-downstream.sh
     fi
 

@@ -25,6 +25,7 @@ GITHUB_MSG="
 } "
 
 trigger_downstream() {
+    echo "Triggering: ${DOWNSTREAM_REPO}"
     curl -s -X POST \
       -H "Content-Type: application/json" \
       -H "Accept: application/json" \
@@ -35,10 +36,10 @@ trigger_downstream() {
 }
 
 post_pending() {
+    echo "Status [0]: For ${TRAVIS_COMMIT} in ${UPSTREAM_NAME}"
     curl -s -X POST \
       -H "Content-Type: application/json" \
       -H "Accept: application/json" \
-      -H "Travis-API-Version: 3" \
       -H "Authorization: token ${GITHUB_TOKEN}" \
       -d "${GITHUB_MSG}" \
       "https://api.github.com/repos/${UPSTREAM_REPO}/statuses/${TRAVIS_COMMIT}"
