@@ -9,7 +9,7 @@ TRAVIS_MSG="
 {
 \"request\":
     {
-        \"message\": \"Triggered build: ${UPSTREAM_NAME} : ${TRAVIS_COMMIT}\",
+        \"message\": \"Triggered build: ${UPSTREAM_REPO} : ${TRAVIS_COMMIT}\",
         \"branch\": \"${BRANCH_NAME}\"
         \"config\": {
             \"env\": \"TRIGGER_COMMIT=${TRAVIS_COMMIT}\"
@@ -36,7 +36,7 @@ trigger_downstream() {
 }
 
 post_pending() {
-    echo "Status [0]: For ${TRAVIS_COMMIT} in ${UPSTREAM_NAME}"
+    echo "Status [0]: For ${TRAVIS_COMMIT} in ${UPSTREAM_REPO}"
     curl -s -X POST \
       -H "Content-Type: application/json" \
       -H "Accept: application/json" \
