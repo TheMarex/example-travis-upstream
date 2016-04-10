@@ -56,9 +56,9 @@ curl -s -X POST \
   -d \"${DOWNSTREAM_GITHUB_MSG_SUCCESS}\" \
   \"https://api.github.com/repos/${UPSTREAM_REPO}/statuses/${TRAVIS_COMMIT}\" > /dev/null
 "
-ESCAPED_SUCCESS_PAYLOAD=$(echo ${SUCCESS_PAYLOAD} | sed "s/\"/\\\"/g")
-ESCAPED_FAILURE_PAYLOAD=$(echo ${FAILURE_PAYLOAD} | sed "s/\"/\\\"/g")
-ESCAPED_PENDING_PAYLOAD=$(echo ${PENDING_PAYLOAD} | sed "s/\"/\\\"/g")
+ESCAPED_SUCCESS_PAYLOAD=$(echo ${SUCCESS_PAYLOAD} | sed "s/\"/\\\"/g" | sed "s/\\/\\\\/g")
+ESCAPED_FAILURE_PAYLOAD=$(echo ${FAILURE_PAYLOAD} | sed "s/\"/\\\"/g" | sed "s/\\/\\\\/g")
+ESCAPED_PENDING_PAYLOAD=$(echo ${PENDING_PAYLOAD} | sed "s/\"/\\\"/g" | sed "s/\\/\\\\/g")
 
 TRAVIS_MSG="
 {
