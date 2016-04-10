@@ -28,6 +28,9 @@ DOWNSTREAM_GITHUB_MSG_FAILURE="
     \"description\": \"Running downstream build\",
     \"context\": \"continuous-integration/downstream/${DOWNSTREAM_REPO}/\${TRAVIS_BUILD_NUMBER}\"
 }"
+ESCAPED_DOWNSTREAM_GITHUB_MSG_SUCCESS=$(echo ${DOWNSTREAM_GITHUB_MSG_SUCCESS} | sed "s/\"/\\\"/g" | sed "s/\\\\/\\\\\\\\/g")
+ESCAPED_DOWNSTREAM_GITHUB_MSG_FAILURE=$(echo ${DOWNSTREAM_GITHUB_MSG_FAILURE} | sed "s/\"/\\\"/g" | sed "s/\\\\/\\\\\\\\/g")
+ESCAPED_DOWNSTREAM_GITHUB_MSG_PENDING=$(echo ${DOWNSTREAM_GITHUB_MSG_PENDING} | sed "s/\"/\\\"/g" | sed "s/\\\\/\\\\\\\\/g")
 
 PENDING_PAYLOAD="
 echo \"Status [\${TRAVIS_BUILD_NUMBER}]: For ${TRAVIS_COMMIT} in ${UPSTREAM_REPO}\"; \
@@ -35,7 +38,7 @@ curl -s -X POST \
   -H \"Content-Type: application/json\" \
   -H \"Accept: application/json\" \
   -H \"Authorization: token \${GITHUB_TOKEN}\" \
-  -d \"${DOWNSTREAM_GITHUB_MSG_PENDING}\" \
+  -d \"${ESCAPED_DOWNSTREAM_GITHUB_MSG_PENDING}\" \
   \"https://api.github.com/repos/${UPSTREAM_REPO}/statuses/${TRAVIS_COMMIT}\" > /dev/null
 "
 FAILURE_PAYLOAD="
@@ -44,7 +47,7 @@ curl -s -X POST \
   -H \"Content-Type: application/json\" \
   -H \"Accept: application/json\" \
   -H \"Authorization: token \${GITHUB_TOKEN}\" \
-  -d \"${DOWNSTREAM_GITHUB_MSG_FAILURE}\" \
+  -d \"${ESCAPED_DOWNSTREAM_GITHUB_MSG_FAILURE}\" \
   \"https://api.github.com/repos/${UPSTREAM_REPO}/statuses/${TRAVIS_COMMIT}\" > /dev/null
 "
 SUCCESS_PAYLOAD="
@@ -53,7 +56,7 @@ curl -s -X POST \
   -H \"Content-Type: application/json\" \
   -H \"Accept: application/json\" \
   -H \"Authorization: token \${GITHUB_TOKEN}\" \
-  -d \"${DOWNSTREAM_GITHUB_MSG_SUCCESS}\" \
+  -d \"${ESCAPED_DOWNSTREAM_GITHUB_MSG_SUCCESS}\" \
   \"https://api.github.com/repos/${UPSTREAM_REPO}/statuses/${TRAVIS_COMMIT}\" > /dev/null
 "
 ESCAPED_SUCCESS_PAYLOAD=$(echo ${SUCCESS_PAYLOAD} | sed "s/\"/\\\"/g" | sed "s/\\\\/\\\\\\\\/g")
