@@ -4,7 +4,8 @@ set -eu
 set -o pipefail
 
 TRAVIS_COMMIT=${TRAVIS_COMMIT:-$(git log --format=%H --no-merges -n 1 | tr -d '\n')}
-DOWNSTREAM_BRANCH=${DOWNSTREAM_BRANCH:-$(git rev-parse --abbrev-ref HEAD)}
+TRAVIS_BRANCH=${TRAVIS_BRANCH:-$(git rev-parse --abbrev-ref HEAD)}
+DOWNSTREAM_BRANCH=${DOWNSTREAM_BRANCH:-${TRAVIS_BRANCH}}
 TRAVIS_MSG="
 {
 \"request\":
