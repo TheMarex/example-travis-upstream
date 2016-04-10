@@ -10,7 +10,7 @@ TRAVIS_MSG="
 \"request\":
     {
         \"message\": \"Triggered build: ${UPSTREAM_REPO} : ${TRAVIS_COMMIT}\",
-        \"branch\": \"${BRANCH_NAME}\"
+        \"branch\": \"${DOWNSTREAM_BRANCH}\"
         \"config\": {
             \"env\": \"TRIGGER_COMMIT=${TRAVIS_COMMIT}\"
         }
