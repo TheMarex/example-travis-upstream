@@ -56,6 +56,9 @@ curl -s -X POST \
   -d \"${DOWNSTREAM_GITHUB_MSG_SUCCESS}\" \
   \"https://api.github.com/repos/${UPSTREAM_REPO}/statuses/${TRAVIS_COMMIT}\" > /dev/null
 "
+ESCAPED_SUCCESS_PAYLOAD=$(echo ${SUCCESS_PAYLOAD} | sed "s/\"/\\\"/g")
+ESCAPED_FAILURE_PAYLOAD=$(echo ${FAILURE_PAYLOAD} | sed "s/\"/\\\"/g")
+ESCAPED_PENDING_PAYLOAD=$(echo ${PENDING_PAYLOAD} | sed "s/\"/\\\"/g")
 
 TRAVIS_MSG="
 {
@@ -64,9 +67,9 @@ TRAVIS_MSG="
         \"message\": \"Triggered build: ${UPSTREAM_REPO} : ${TRAVIS_COMMIT}\",
         \"branch\": \"${DOWNSTREAM_BRANCH}\",
         \"config\": {
-            \"before_script\": "${PENDING_PAYLOAD}"
-            \"after_success\": "${SUCCESS_PAYLOAD}"
-            \"after_failure\": "${FAILURE_PAYLOAD}"
+            \"before_script\": "${ESCAPED_PENDING_PAYLOAD}"
+            \"after_success\": "${ESCAPED_SUCCESS_PAYLOAD}"
+            \"after_failure\": "${ESCAPED_FAILURE_PAYLOAD}"
         }
     }
 }"
